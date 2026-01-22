@@ -5,8 +5,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
 from utils.email_utils import send_404_report
+from selenium.webdriver.chrome.options import Options
 
-driver = webdriver.Chrome()
+
+options = Options()
+options.add_argument("--headless=new")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
+driver = webdriver.Chrome(options=options)
 driver.maximize_window()
 driver.get("https://www.seesight-tours.com/tours")
 
