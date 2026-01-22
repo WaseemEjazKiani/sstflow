@@ -2,10 +2,10 @@ name: Selenium Automation Report
 
 on:
   push:
-    branches: [ main ]   # Trigger on push to main
+    branches: [ main ]
   schedule:
-    - cron: '0 7 * * *'  # Daily at 7 AM UTC
-  workflow_dispatch:      # Manual trigger
+    - cron: '0 7 * * *'
+  workflow_dispatch:
 
 jobs:
   automation:
@@ -26,23 +26,15 @@ jobs:
           pip install selenium
           pip install -r requirements.txt || echo "No requirements.txt found"
 
-      - name: Install Chrome and ChromeDriver
+      - name: Install additional packages
         run: |
           sudo apt update
           sudo apt install -y unzip xvfb libxi6 wget
-          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt install -y ./google-chrome-stable_current_amd64.deb
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
-          wget -q https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Run Selenium script
         env:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         run: |
-          # Optional: headless flag if using Chrome
           export PYTHONUNBUFFERED=1
           python main.py
