@@ -1,10 +1,16 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load variables from .env
+sender_email = os.getenv("EMAIL_USER")
+sender_password = os.getenv("EMAIL_PASS")
+
+
 
 def send_404_report(report_list, coming_soon_list=None):
-    sender_email = "waseemkianitripshepherd@gmail.com"
-    sender_password = "hfrd nvzs pjhr ptkq"   # Gmail App Password
     receiver_email = "waseemejazkiani@gmail.com"
 
     subject = "Products Automation Report"
