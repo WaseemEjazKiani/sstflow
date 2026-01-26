@@ -6,10 +6,11 @@ from selenium.common.exceptions import TimeoutException
 import time
 from utils.email_utils import send_404_report
 from selenium.webdriver.chrome.options import Options
+from private import private_tours
 
 
 options = Options()
-options.add_argument("--headless=new")
+# options.add_argument("--headless=new")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
@@ -96,10 +97,13 @@ for i in range(len(elements)):
 #     print("•", item)
 # print("======================================================")
 
-# Send email if there are 404 products or Coming Soon products
-if not_found_products or coming_soon_products:
-    send_404_report(not_found_products, coming_soon_products)
-    print("Report email sent successfully.")
-else:
-    print("No 404 or Coming Soon products found. No email sent.")
+private_tours(driver, not_found_products, coming_soon_products);
+
+# # Send email if there are 404 products or Coming Soon products
+# if not_found_products or coming_soon_products:
+#     send_404_report(not_found_products, coming_soon_products)
+#     print("Report email sent successfully.")
+# else:
+#     print("No 404 or Coming Soon products found. No email sent.")
+
 

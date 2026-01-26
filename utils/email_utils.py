@@ -10,27 +10,42 @@ sender_password = os.getenv("EMAIL_PASS")
 
 
 
-def send_404_report(report_list, coming_soon_list=None):
-    receiver_email = "waseemejazkiani@gmail.com"
+def send_404_report(not_found_list,
+                    coming_soon_list=None,
+                    not_found_private_list=None,
+                    coming_soon_private_list=None):
 
+    receiver_email = "waseemejazkiani@gmail.com"
     subject = "Products Automation Report"
 
-    # Prepare email body
     body = ""
 
-    if report_list:
-        body += "❌ The following products returned 404:\n\n"
-        for item in report_list:
+    if not_found_list:
+        body += "❌ Public products returned 404:\n\n"
+        for item in not_found_list:
             body += f"- {item}\n"
         body += "\n"
 
     if coming_soon_list:
-        body += "⚠️ The following products are showing Coming Soon on Avalability:\n\n"
+        body += "⚠️ Public products showing Coming Soon:\n\n"
         for item in coming_soon_list:
             body += f"- {item}\n"
+        body += "\n"
+
+    if not_found_private_list:
+        body += "🔒 Private products returned 404:\n\n"
+        for item in not_found_private_list:
+            body += f"- {item}\n"
+        body += "\n"
+
+    if coming_soon_private_list:
+        body += "⏳ Private products showing Coming Soon:\n\n"
+        for item in coming_soon_private_list:
+            body += f"- {item}\n"
+        body += "\n"
 
     if not body:
-        body = "No 404 or Coming Soon products found."
+        body = "No 404 or Coming Soon products found (public or private)."
 
     msg = MIMEMultipart()
     msg["From"] = sender_email
