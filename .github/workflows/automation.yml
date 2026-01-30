@@ -1,11 +1,17 @@
 name: Selenium Automation Report
 
+# Run workflow on push or pull request to the main branch
 on:
-  push:
-    branches: [ main ]
   schedule:
-    - cron: '0 */6 * * *'   # Run every 6 hours (UTC)
-  workflow_dispatch:
+    # Run every 1 hour at minute 0 (UTC)
+    # - cron: "0 * * * *"
+    # - cron: "*/10 * * * *"
+    - cron: "0 */6 * * *"
+
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   automation:
