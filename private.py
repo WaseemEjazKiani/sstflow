@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from utils.email_utils import send_404_report
+import time
 
 def private_tours(driver, not_found_list, coming_soon_list ):
     print(f"⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ Printing Next page is Coming Soon")
@@ -18,6 +19,8 @@ def private_tours(driver, not_found_list, coming_soon_list ):
     see_more = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, "//h2[text()='See More']"))
     )
+    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", see_more)
+    time.sleep(2)
     see_more.click()
 
     elements = WebDriverWait(driver, 20).until(
@@ -35,8 +38,10 @@ def private_tours(driver, not_found_list, coming_soon_list ):
         product = elements[i]
         listing_title = product.find_element(By.XPATH, './/h2').text.strip()
         print("\nListing title:", listing_title)
-
+        time.sleep(2)
         driver.execute_script("arguments[0].scrollIntoView({block:'center'});", product)
+        time.sleep(2)
+
         WebDriverWait(driver, 20).until(EC.element_to_be_clickable(product)).click()
 
         try:
@@ -51,6 +56,8 @@ def private_tours(driver, not_found_list, coming_soon_list ):
             see_more = WebDriverWait(driver, 40).until(
                 EC.element_to_be_clickable((By.XPATH, "//h2[text()='See More']"))
             )
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", see_more)
+            time.sleep(2)
             see_more.click()
             continue
 
@@ -78,6 +85,8 @@ def private_tours(driver, not_found_list, coming_soon_list ):
         see_more = WebDriverWait(driver, 20).until(
             EC.element_to_be_clickable((By.XPATH, "//h2[text()='See More']"))
         )
+        driver.execute_script("arguments[0].scrollIntoView({block:'center'});", see_more)
+        time.sleep(2)
         see_more.click()
 
     # -------- Final 404 Report --------
