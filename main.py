@@ -28,7 +28,11 @@ coming_soon_products = []
 see_more = WebDriverWait(driver, 20).until(
     EC.element_to_be_clickable((By.XPATH, "//h2[text()='See More']"))
 )
+driver.execute_script("arguments[0].scrollIntoView({block:'center'});", see_more)
+time.sleep(2)
 see_more.click()
+
+# driver.execute_script("arguments[0].click();", see_more)
 
 elements = WebDriverWait(driver, 20).until(
     EC.presence_of_all_elements_located((By.XPATH, cards_xpath))
@@ -46,7 +50,10 @@ for i in range(len(elements)):
     listing_title = product.find_element(By.XPATH, './/h2').text.strip()
     print("\nListing title:", listing_title)
 
+    time.sleep(2)
     driver.execute_script("arguments[0].scrollIntoView({block:'center'});", product)
+    time.sleep(2)
+
     WebDriverWait(driver, 20).until(EC.element_to_be_clickable(product)).click()
 
     try:
@@ -61,6 +68,8 @@ for i in range(len(elements)):
         see_more = WebDriverWait(driver, 40).until(
             EC.element_to_be_clickable((By.XPATH, "//h2[text()='See More']"))
         )
+        driver.execute_script("arguments[0].scrollIntoView({block:'center'});", see_more)
+        time.sleep(2)
         see_more.click()
         continue
 
@@ -88,6 +97,8 @@ for i in range(len(elements)):
     see_more = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, "//h2[text()='See More']"))
     )
+    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", see_more)
+    time.sleep(2)
     see_more.click()
 
 # -------- Final 404 Report --------
